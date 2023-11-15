@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -8,22 +8,25 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/student")
+@AllArgsConstructor
 public class ResourceController {
 
-    @Autowired
+
     StudentRepository studentRepository;
 
-    @GetMapping
-    public List<Student> getStudent(@RequestParam(name = "id", required = false) Integer id){
-        if(id != null){
-            return List.of(studentRepository.findById(id).orElse(null));
-        }
-        return  studentRepository.findAll();
+
+    @GetMapping("/{id}")
+    public Optional<Student> getByID(@PathVariable Integer id){
+        return studentRepository.findById(id);
     }
 
+    @GetMapping
+    public  List<Student> getAll(){
+        return studentRepository.findAll();
+    }
 
     @PostMapping
-    public Student postStudent(@RequestBody Student student){
+    public Student post(@RequestBody Student student){
         return studentRepository.save(student);
     }
 }
