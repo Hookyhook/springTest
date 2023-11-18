@@ -16,7 +16,7 @@ public class ResourceController {
 
 
     @GetMapping("/{id}")
-    public Optional<Student> getByID(@PathVariable Integer id){
+    public Optional<Student> getById(@PathVariable Integer id){
         return studentRepository.findById(id);
     }
 
@@ -28,5 +28,10 @@ public class ResourceController {
     @PostMapping
     public Student post(@RequestBody Student student){
         return studentRepository.save(student);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Integer id){
+        studentRepository.deleteById(id);
     }
 }
