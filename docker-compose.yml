@@ -1,8 +1,17 @@
 services:
-  database:
+  database_student:
     image: mysql
     ports:
       - 3306:3306
+    environment:
+      MYSQL_USER: test
+      MYSQL_DATABASE: test
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_PASSWORD: 1234
+  database_grade:
+    image: mysql
+    ports:
+      - 3307:3306
     environment:
       MYSQL_USER: test
       MYSQL_DATABASE: test
@@ -17,11 +26,11 @@ services:
       ZOOKEEPER_SYNC_LIMIT: 2
     ports:
       - 2181:2181
-  #    volumes:
+  #  volumes:
   #      - zk-data:/var/lib/zookeeper/data # for Data
   #      - zk-txn-logs:/var/lib/zookeeper/log # for transaction logs
   ##########################KafkA#########################
-  # Each Kafka listener will be confgiured for each ip/domain with a unique port #
+  # Each Kafka listener will be configured for each ip/domain with a unique port #
   # ex localhost:port will have local host access to docker container and external host services #
   # ex kafka:port will only have access internally to all containers within a same network #
   # ex ip:port will have external access from other host to this host #
@@ -29,7 +38,7 @@ services:
     image: confluentinc/cp-kafka:5.3.0
     container_name: kafka
     environment:
-      ## COnfigure listener here like ip:port for external access and localhost:port for host only access
+      ## Configure listener here like ip:port for external access and localhost:port for host only access
       ## or configure localhost:port1 & ip:port2 together for enabling host as well as external access both
       ## Here Plaintext refers to Protocol for Kafka
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092

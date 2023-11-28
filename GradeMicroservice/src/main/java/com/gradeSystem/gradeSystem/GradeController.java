@@ -8,6 +8,7 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/grade")
 class GradeController{
 
 
@@ -25,5 +26,10 @@ class GradeController{
     @GetMapping
     public List<Grade> getGrades(){
         return gradeRepository.findAll();
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteGradeByID(@PathVariable Integer id){
+        gradeRepository.deleteById(id);
     }
 }
